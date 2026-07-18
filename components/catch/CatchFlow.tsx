@@ -9,12 +9,11 @@
  * toggles, and a free-text note.
  *
  * On Confirm it validates the name (blocking with a message when blank), then
- * orchestrates: capture photo (may be null) → read coordinates (may be null) →
- * reverse geocode (null-safe) → persist via `insertCat` → success haptic →
- * `onCaught(cat)` so the Camera_Screen can run the desaturate+flash and present
- * the Gotcha_Sheet.
+ * orchestrates: use the provided `photoUri` (may be null) → read coordinates
+ * (may be null) → reverse geocode (null-safe) → persist via `insertCat` →
+ * success haptic → `onCaught(cat)` so the Camera_Screen can run the
+ * desaturate+flash and present the Gotcha_Sheet.
  */
-import type { CameraView } from 'expo-camera';
 import { useEffect, useState } from 'react';
 import {
     Dimensions,
@@ -39,7 +38,6 @@ import { isValidName } from '@/lib/catHelpers';
 import { insertCat } from '@/lib/db';
 import { notificationSpotted } from '@/lib/hapticsService';
 import { getCurrentCoords } from '@/lib/locationService';
-import { capturePhoto } from '@/lib/photoService';
 import { reverseGeocode } from '@/lib/tomtomService';
 import type { Cat_Record, Condition, Personality } from '@/lib/types';
 
@@ -70,8 +68,8 @@ const PERSONALITIES: Personality[] = [
 export interface CatchFlowProps {
   /** Whether the sheet is presented. */
   visible: boolean;
-  /** Ref to the live CameraView used to capture the catch photo. */
-  cameraRef: React.RefObject<CameraView | null>;
+  /** Photo captured/picked before opening the sheet; may be null (photo-less catch). */
+  photoUri: string | null;
   /** Called with the persisted Cat_Record after a successful catch. */
   onCaught: (cat: Cat_Record) => void;
   /** Called when the sheet is dismissed without catching. */
@@ -80,7 +78,7 @@ export interface CatchFlowProps {
 
 export default function CatchFlow({
   visible,
-  cameraRef,
+  photoUri,
   onCaught,
   onDismiss,
 }: CatchFlowProps) {
@@ -134,10 +132,6 @@ export default function CatchFlow({
     setSubmitting(true);
 
     try {
-      // Photo — may be null; the catch proceeds photo-less on failure.
-      const camera = cameraRef.current;
-      const photo = camera ? await capturePhoto(camera) : { uri: null };
-
       // Coordinates — null when permission denied / unavailable.
       const coords = await getCurrentCoords();
 
@@ -148,7 +142,7 @@ export default function CatchFlow({
 
       const cat = await insertCat({
         name: name.trim(),
-        photo_uri: photo.uri,
+        photo_uri: photoUri,
         condition,
         personality,
         note: note.trim().length > 0 ? note.trim() : null,

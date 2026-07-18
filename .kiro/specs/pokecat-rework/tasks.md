@@ -85,8 +85,8 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
 - [ ] 4. Checkpoint - Ensure all tests pass
   - Ensure all foundation + Data_Store tests pass, ask the user if questions arise.
 
-- [ ] 5. Implement side-effecting services
-  - [ ] 5.1 Implement `lib/tomtomService.ts`
+- [x] 5. Implement side-effecting services
+  - [x] 5.1 Implement `lib/tomtomService.ts`
     - Read key from `process.env.EXPO_PUBLIC_TOMTOM_API_KEY`; add a `.env` placeholder entry for the key
     - `isConfigured()` (true only for non-blank key), `getMapStyleUrl()` (TomTom night style URL, null if unconfigured), `reverseGeocode(lat, lng)` (TomTom Search API, null on failure/unconfigured)
     - _Requirements: 1.7, 1.8, 9.1, 9.2, 9.6, 10.3_
@@ -131,8 +131,8 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Assert TabBar renders the three navigation controls and highlights the active route
     - _Requirements: 13.1, 13.4_
 
-- [ ] 7. Implement the Camera_Screen and AR overlay
-  - [ ] 7.1 Implement the AR_Overlay reducer and `components/camera/AROverlay.tsx`
+- [x] 7. Implement the Camera_Screen and AR overlay
+  - [x] 7.1 Implement the AR_Overlay reducer and `components/camera/AROverlay.tsx`
     - Extract a pure reducer `arOverlayReducer(state, event)` over states `idle`/`detected`/`catching` (detect → detected, dismiss/reset → idle, catch → catching)
     - Render a Skia `<Canvas>` at `absoluteFill` drawing corner brackets, scan ring, scan line, crosshair; drive `bracketScale`/`scanY`/`desaturate`/`flash` with Reanimated 4 shared values (via react-native-worklets) read by Skia for 60fps; fire `onFlashComplete` after desaturate+flash
     - _Requirements: 4.1, 4.2, 4.3, 4.6_
@@ -142,12 +142,12 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Generator: arbitrary starting state + event sequences; assert detect → `detected`, dismiss/reset → `idle`
     - **Validates: Requirements 4.3**
 
-  - [ ] 7.3 Implement `components/camera/ScanPulse.tsx` and `components/camera/CatchButton.tsx`
+  - [x] 7.3 Implement `components/camera/ScanPulse.tsx` and `components/camera/CatchButton.tsx`
     - ScanPulse: Reanimated expanding ring (scale 1→2.5, opacity 1→0) fired on `detected`
     - CatchButton: center action-row control that sets AR_Overlay to `detected` (impact haptic + Scan_Pulse) and opens the Catch_Flow; flank with photo control (left) and hint control (right)
     - _Requirements: 2.3, 4.3, 4.4, 5.1_
 
-  - [ ] 7.4 Implement `app/(tabs)/index.tsx` (Camera_Screen)
+  - [x] 7.4 Implement `app/(tabs)/index.tsx` (Camera_Screen)
     - Render `<CameraView style={StyleSheet.absoluteFill} facing="back" ref={cameraRef} />` full-screen when granted; request camera permission on mount when undetermined; permission-request view while not granted; "enable in Settings" (`Linking.openSettings()`) when permanently denied; re-render to live feed on grant without restart
     - Overlay AR_Overlay + floating action row above the feed; fade out "Point at a stray cat" hint after 3s; call `locationService.ensurePermission()` on mount when undetermined
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 3.4, 10.1_
@@ -200,7 +200,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - _Requirements: 11.2, 11.3, 12.1, 12.2_
 
 - [ ] 12. Cleanup and final wiring
-  - [-] 12.1 Remove leftover Expo template files
+  - [x] 12.1 Remove leftover Expo template files
     - Delete `app/(tabs)/two.tsx`, `components/EditScreenInfo.tsx`, and any other unused default-template files/components; remove dangling imports and update references so the app compiles cleanly
     - _Requirements: 2.5_
 
