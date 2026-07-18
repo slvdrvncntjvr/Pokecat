@@ -1,22 +1,37 @@
 {
   "expo": {
     "name": "Pokecat",
-    "slug": "Pokecat",
+    "slug": "pokecat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "pokecat",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0a0d14",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.pokecat.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Pokecat needs camera access to photograph stray cats you spot.",
+        "NSLocationWhenInUseUsageDescription": "Pokecat uses your location to pin cats on the map.",
+        "NSLocationAlwaysUsageDescription": "Pokecat uses your location to pin cats on the map."
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0a0d14",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "package": "com.pokecat.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -26,14 +41,24 @@
     },
     "plugins": [
       "expo-router",
+      "expo-camera",
+      "expo-location",
+      "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pokecat needs photo access to add pictures of cats."
+        }
+      ],
       [
         "expo-splash-screen",
         {
+          "backgroundColor": "#0a0d14",
           "image": "./assets/images/splash-icon.png",
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "resizeMode": "contain"
         }
-      ]
+      ],
+      "@maplibre/maplibre-react-native"
     ],
     "experiments": {
       "typedRoutes": true
