@@ -8,7 +8,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
 
 ## Tasks
 
-- [ ] 1. Establish shared types and testing infrastructure
+- [x] 1. Establish shared types and testing infrastructure
   - [x] 1.1 Create `lib/types.ts`
     - Define `Condition` and `Personality` string-union types
     - Define `Cat_Record` and `Player_Record` interfaces exactly as in the design (nullable fields, boolean flags, epoch-ms timestamps)
@@ -21,36 +21,36 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Add a trivial smoke test and confirm the runner executes
     - _Requirements: 1.3_
 
-- [ ] 2. Implement pure helpers and their property tests
-  - [ ] 2.1 Implement `lib/catHelpers.ts`
+- [x] 2. Implement pure helpers and their property tests
+  - [x] 2.1 Implement `lib/catHelpers.ts`
     - `conditionColor(condition: Condition): string` — total switch over the union returning the design's hex colors
     - `isValidName(name: string): boolean` — true when `name.trim().length > 0`
     - `formatLocation(record: Cat_Record): string` — return `location_name` when non-null, else `"lat, lng"` from coords, else a defined placeholder
     - _Requirements: 5.3, 9.4, 12.3_
 
-  - [ ]* 2.2 Write property test for condition-to-color mapping
+  - [x]* 2.2 Write property test for condition-to-color mapping
     - **Property 3: Condition-to-color mapping is total and deterministic**
     - Generator: `fc.constantFrom(...)` over the `Condition` union; assert defined non-empty string and repeat-call determinism
     - **Validates: Requirements 9.4**
 
-  - [ ]* 2.3 Write property test for name validation
+  - [x]* 2.3 Write property test for name validation
     - **Property 2: Name validation rejects blank names**
     - Generators: whitespace-only strings (rejected) vs. strings with ≥1 non-whitespace char (accepted)
     - **Validates: Requirements 5.3**
 
-  - [ ]* 2.4 Write property test for location fallback formatting
+  - [x]* 2.4 Write property test for location fallback formatting
     - **Property 4: Location display falls back to coordinates when no place name**
     - Generator: Cat_Records with/without `location_name` and with/without coords
     - **Validates: Requirements 12.3**
 
-- [ ] 3. Implement the SQLite Data_Store
-  - [ ] 3.1 Implement schema, mappers, and `initDatabase` in `lib/db.ts`
+- [x] 3. Implement the SQLite Data_Store
+  - [x] 3.1 Implement schema, mappers, and `initDatabase` in `lib/db.ts`
     - Use expo-sqlite v15 async API (`openDatabaseAsync`, `execAsync`, `runAsync`, `getAllAsync`, `getFirstAsync`) with a memoized single connection
     - Run `CREATE TABLE IF NOT EXISTS` migrations for `cats` and `player` per the design schema
     - Implement `rowToCat` (and inverse binding helper) mapping INTEGER 0/1 ↔ boolean and NULL ↔ null
     - _Requirements: 8.1, 8.2_
 
-  - [ ] 3.2 Implement `insertCat`, `getAllCats`, `getCatById`, `upsertPlayer`
+  - [x] 3.2 Implement `insertCat`, `getAllCats`, `getCatById`, `upsertPlayer`
     - `insertCat`: validate required NOT NULL fields (`name`, `condition`, `personality`) and throw a descriptive `Error` if missing; assign uuid v4 `id` and `caught_at` when absent; bind all fields as parameters
     - `getAllCats`: `SELECT * ... ORDER BY caught_at DESC` mapped through `rowToCat`
     - `getCatById`: single-row lookup by id, returns `Cat_Record | null`
@@ -86,7 +86,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
   - Ensure all foundation + Data_Store tests pass, ask the user if questions arise.
 
 - [ ] 5. Implement side-effecting services
-  - [ ] 5.1 Implement `lib/tomtomService.ts`
+  - [x] 5.1 Implement `lib/tomtomService.ts`
     - Read key from `process.env.EXPO_PUBLIC_TOMTOM_API_KEY`; add a `.env` placeholder entry for the key
     - `isConfigured()` (true only for non-blank key), `getMapStyleUrl()` (TomTom night style URL, null if unconfigured), `reverseGeocode(lat, lng)` (TomTom Search API, null on failure/unconfigured)
     - _Requirements: 1.7, 1.8, 9.1, 9.2, 9.6, 10.3_
@@ -100,30 +100,30 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Assert `getMapStyleUrl()` returns the night/dark style URL when a key is configured
     - _Requirements: 9.2_
 
-  - [ ] 5.4 Implement `lib/hapticsService.ts`
+  - [x] 5.4 Implement `lib/hapticsService.ts`
     - `impactDetect()` → `Haptics.impactAsync(Medium)`; `notificationSpotted()` → `Haptics.notificationAsync(Success)`
     - _Requirements: 4.4, 7.2_
 
-  - [ ] 5.5 Implement `lib/locationService.ts`
+  - [x] 5.5 Implement `lib/locationService.ts`
     - `ensurePermission()` via `requestForegroundPermissionsAsync`; `getCurrentCoords()` returns `{lat,lng}` or null when denied/unavailable
     - _Requirements: 10.1, 10.2, 10.4_
 
-  - [ ] 5.6 Implement `lib/photoService.ts` and Camera_Service helper
+  - [x] 5.6 Implement `lib/photoService.ts` and Camera_Service helper
     - `capturePhoto(cameraRef)`, `pickPhoto()`, `resizeAndPersist(uri)` (max width ~1024, jpeg ~0.7, persist to documentDirectory) using expo-image-picker + expo-image-manipulator v57 `manipulate` context API
     - Return `{ uri: null, error }` on any failure so the catch can proceed photo-less
     - Add `lib/cameraService.ts` with `captureStill(cameraRef)` and permission-state derivation helper
     - _Requirements: 6.1, 6.2, 6.3, 6.4_
 
-- [ ] 6. Implement root and tab navigation shell
-  - [ ] 6.1 Implement `app/_layout.tsx`
+- [x] 6. Implement root and tab navigation shell
+  - [x] 6.1 Implement `app/_layout.tsx`
     - Import `react-native-reanimated` at top; wrap tree in `GestureHandlerRootView`; call `await initDatabase()` on mount and hold splash until fonts + DB init complete; apply dark theme with background `#0a0d14`
     - _Requirements: 1.5, 8.1, 8.2_
 
-  - [ ] 6.2 Implement `components/shared/TabBar.tsx`
+  - [x] 6.2 Implement `components/shared/TabBar.tsx`
     - Floating rounded dark-glass bar above the safe-area bottom with Camera/Map/Pokedex controls; highlight active route; navigate via `navigation.navigate(route)`
     - _Requirements: 13.1, 13.2, 13.3, 13.4_
 
-  - [ ] 6.3 Implement `app/(tabs)/_layout.tsx`
+  - [x] 6.3 Implement `app/(tabs)/_layout.tsx`
     - expo-router `Tabs` with `tabBar={(props) => <TabBar {...props} />}`, `headerShown: false`, transparent `sceneStyle`; routes `index` (default Camera), `map`, `pokedex`
     - _Requirements: 2.5, 13.1_
 
@@ -157,7 +157,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - _Requirements: 2.3, 3.2, 3.3_
 
 - [ ] 8. Implement the Catch_Flow and Gotcha_Sheet
-  - [ ] 8.1 Implement `components/catch/CatchFlow.tsx`
+  - [-] 8.1 Implement `components/catch/CatchFlow.tsx`
     - Bottom sheet rising from the bottom (Reanimated translateY + gesture-handler pan-to-dismiss); name input, Condition/Personality chip selectors, is-TNR/needs-rescue toggles, free-text note
     - On Confirm: block with validation message when `isValidName` is false; orchestrate photo (may be null) → `getCurrentCoords` → `reverseGeocode` (null-safe) → `insertCat` → `notificationSpotted` → trigger AR desaturate+flash then present Gotcha_Sheet
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 6.4, 7.1, 7.2, 10.2, 10.3, 10.4, 10.5_

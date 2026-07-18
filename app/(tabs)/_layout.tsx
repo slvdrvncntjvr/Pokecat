@@ -1,70 +1,29 @@
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
+/**
+ * Tab navigation shell (R2.5, R13.1).
+ *
+ * Uses expo-router `Tabs` with a custom {@link TabBar} injected via the
+ * `tabBar` prop. Headers are hidden and the scene background is transparent so
+ * the full-screen camera feed on the default Camera route shows through behind
+ * the floating dark-glass Tab_Bar. Three routes are declared: `index` (default
+ * Camera), `map`, and `pokedex`.
+ */
+import { Tabs } from 'expo-router';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import TabBar from '@/components/shared/TabBar';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-        }}
-      />
+        headerShown: false,
+        // Transparent scene so the camera feed shows through behind screens.
+        sceneStyle: { backgroundColor: 'transparent' },
+      }}
+    >
+      <Tabs.Screen name="index" options={{ title: 'Camera' }} />
+      <Tabs.Screen name="map" options={{ title: 'Map' }} />
+      <Tabs.Screen name="pokedex" options={{ title: 'Pokedex' }} />
     </Tabs>
   );
 }
