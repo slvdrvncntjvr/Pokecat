@@ -86,7 +86,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
   - Ensure all foundation + Data_Store tests pass, ask the user if questions arise.
 
 - [ ] 5. Implement side-effecting services
-  - [x] 5.1 Implement `lib/tomtomService.ts`
+  - [ ] 5.1 Implement `lib/tomtomService.ts`
     - Read key from `process.env.EXPO_PUBLIC_TOMTOM_API_KEY`; add a `.env` placeholder entry for the key
     - `isConfigured()` (true only for non-blank key), `getMapStyleUrl()` (TomTom night style URL, null if unconfigured), `reverseGeocode(lat, lng)` (TomTom Search API, null on failure/unconfigured)
     - _Requirements: 1.7, 1.8, 9.1, 9.2, 9.6, 10.3_
@@ -156,13 +156,13 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Assert the action row presents photo/catch/hint controls; assert permission-request and settings-denied views render for the corresponding states
     - _Requirements: 2.3, 3.2, 3.3_
 
-- [ ] 8. Implement the Catch_Flow and Gotcha_Sheet
-  - [-] 8.1 Implement `components/catch/CatchFlow.tsx`
+- [x] 8. Implement the Catch_Flow and Gotcha_Sheet
+  - [x] 8.1 Implement `components/catch/CatchFlow.tsx`
     - Bottom sheet rising from the bottom (Reanimated translateY + gesture-handler pan-to-dismiss); name input, Condition/Personality chip selectors, is-TNR/needs-rescue toggles, free-text note
     - On Confirm: block with validation message when `isValidName` is false; orchestrate photo (may be null) → `getCurrentCoords` → `reverseGeocode` (null-safe) → `insertCat` → `notificationSpotted` → trigger AR desaturate+flash then present Gotcha_Sheet
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 6.4, 7.1, 7.2, 10.2, 10.3, 10.4, 10.5_
 
-  - [ ] 8.2 Implement `components/catch/GotchaSheet.tsx`
+  - [x] 8.2 Implement `components/catch/GotchaSheet.tsx`
     - Full-screen "SPOTTED!" presentation with cat name and photo; fire success notification haptic on present; dismiss returns to Camera_Screen with AR_Overlay reset to `idle`
     - _Requirements: 7.1, 7.2, 7.3_
 
@@ -173,12 +173,12 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
 - [ ] 9. Checkpoint - Ensure all tests pass
   - Ensure Camera, AR overlay, and Catch flow tests pass, ask the user if questions arise.
 
-- [ ] 10. Implement the Map_Screen
-  - [ ] 10.1 Implement `components/map/CatMarker.tsx`
+- [x] 10. Implement the Map_Screen
+  - [x] 10.1 Implement `components/map/CatMarker.tsx`
     - Teardrop marker whose fill comes from `conditionColor(condition)`
     - _Requirements: 9.4_
 
-  - [ ] 10.2 Implement `app/(tabs)/map.tsx`
+  - [x] 10.2 Implement `app/(tabs)/map.tsx`
     - MapLibre `<MapView mapStyle={getMapStyleUrl()} />` (v10 prop) with night style; render one Cat_Marker per Cat_Record at its lat/lng; refresh cats on focus; show config message when key unconfigured; show "map unavailable" error state on style-load failure
     - _Requirements: 9.1, 9.2, 9.3, 9.5, 9.6_
 
@@ -187,11 +187,11 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - _Requirements: 9.3, 9.6_
 
 - [ ] 11. Implement the Pokedex_Screen and Cat_Card
-  - [ ] 11.1 Implement `components/shared/CatCard.tsx`
+  - [x] 11.1 Implement `components/shared/CatCard.tsx`
     - Bottom-sheet card showing name, photo (placeholder when `photo_uri` null), condition, personality, note, location (`formatLocation`), formatted `caught_at`; dismiss returns to originating screen
     - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
-  - [ ] 11.2 Implement `app/(tabs)/pokedex.tsx`
+  - [x] 11.2 Implement `app/(tabs)/pokedex.tsx`
     - `FlatList` grid (`numColumns={3}`) querying `getAllCats()` on focus; each cell shows photo (or placeholder) + name; empty-state message when no cats; selecting a cell presents the Cat_Card
     - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
@@ -200,7 +200,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - _Requirements: 11.2, 11.3, 12.1, 12.2_
 
 - [ ] 12. Cleanup and final wiring
-  - [ ] 12.1 Remove leftover Expo template files
+  - [-] 12.1 Remove leftover Expo template files
     - Delete `app/(tabs)/two.tsx`, `components/EditScreenInfo.tsx`, and any other unused default-template files/components; remove dangling imports and update references so the app compiles cleanly
     - _Requirements: 2.5_
 
