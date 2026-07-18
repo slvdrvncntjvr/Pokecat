@@ -14,7 +14,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Define `Cat_Record` and `Player_Record` interfaces exactly as in the design (nullable fields, boolean flags, epoch-ms timestamps)
     - _Requirements: 8.1, 8.2, 8.3_
 
-  - [-] 1.2 Install and configure the test toolchain
+  - [x] 1.2 Install and configure the test toolchain
     - Add dev deps `fast-check`, `jest-expo`, `@testing-library/react-native`, `@types/jest` (pin exact versions compatible with SDK 57)
     - Configure Jest in `package.json`/`jest.config.js` with `preset: "jest-expo"`, a `test` script, and `transformIgnorePatterns` for RN/Expo modules
     - Add a `jest.setup.ts` that mocks native modules (expo-camera, expo-location, expo-haptics, expo-image-picker, expo-image-manipulator, MaplLibre, Skia) so tests run without a device
