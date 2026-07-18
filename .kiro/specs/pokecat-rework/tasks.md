@@ -186,7 +186,7 @@ All code must follow the Expo v57 documentation (https://docs.expo.dev/versions/
     - Given a list of cats with coordinates, assert one Cat_Marker per cat at correct coordinates; assert unconfigured-key config message renders
     - _Requirements: 9.3, 9.6_
 
-- [ ] 11. Implement the Pokedex_Screen and Cat_Card
+- [x] 11. Implement the Pokedex_Screen and Cat_Card
   - [x] 11.1 Implement `components/shared/CatCard.tsx`
     - Bottom-sheet card showing name, photo (placeholder when `photo_uri` null), condition, personality, note, location (`formatLocation`), formatted `caught_at`; dismiss returns to originating screen
     - _Requirements: 12.1, 12.2, 12.3, 12.4_
